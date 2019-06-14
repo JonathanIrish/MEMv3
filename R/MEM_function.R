@@ -97,26 +97,11 @@ MEM <- function(exp_data, transform=FALSE, cofactor=1, choose.markers=FALSE,mark
     IQRpop = matrix(nrow=num_pops,ncol=num_markers)
     IQRref = matrix(nrow=num_pops,ncol=num_markers)
 
-    #####
-    #     MEANpop = matrix(nrow=num_pops,ncol=num_markers)
-    #     MEANref = matrix(nrow=num_pops,ncol=num_markers)
-    #     SDpop = matrix(nrow=num_pops,ncol=num_markers)
-    #     SDref = matrix(nrow=num_pops,ncol=num_markers)
-
     # Transform values if specified
     if(transform==TRUE){
         exp_data = as.data.frame(cbind(asinh(exp_data[,1:(num_markers-1)]/cofactor),exp_data[,num_markers]))
         colnames(exp_data) = marker_names
     }
-
-    # Get pop and ref means and sd
-    #     for(i in 1:num_pops){
-    #         pop = pop_names[i]
-    #         MEANpop[i,] = abs(apply(subset(exp_data,cluster==pop),2,FUN=mean,na.rm=TRUE))
-    #         SDpop[i,] = apply(subset(exp_data,cluster==pop),2,FUN=sd,na.rm=TRUE)
-    #         MEANref[i,] = abs(apply(subset(exp_data,cluster!=pop),2,FUN=mean,na.rm=TRUE))
-    #         SDref[i,] = apply(subset(exp_data,cluster!=pop),2,FUN=sd,na.rm=TRUE)
-    #     }
 
     # Get population medians and IQRs
     for(i in 1:num_pops){
@@ -175,27 +160,7 @@ MEM <- function(exp_data, transform=FALSE, cofactor=1, choose.markers=FALSE,mark
     if(zero.ref == TRUE){
         MEM_matrix[MEM_matrix<0] <- 0}
 
-    # Get Z-score
-    #     zscore_matrix = ((MEANpop - MEANref)/SDref)[,c(1:ncol(MEM_matrix)-1)]
-    #     maxZ = max(abs(zscore_matrix))
-    #     zscore_matrix_scaled = zscore_matrix/maxZ*10
-    #
-    #     print(MEANpop,suppressWarnings=TRUE)
-
-    #     ks_matrix = matrix(nrow=num_pops,ncol=num_markers-1)
-    #     # KS statistic
-    #     for(n in 1:num_pops){
-    #         for (i in 1:25) {
-    #             pop = pop_names[i]
-    #             ks_pop = subset(exp_data,exp_data$cluster==n)
-    #             ks_ref = subset(exp_data,exp_data$cluster!=n)
-    #             # print(dim(ks_pop),suppressWarnings=TRUE)
-    #             ks_matrix[n,i] = ks.test(ks_pop[,i],ks_ref[,i],exact=FALSE)$statistic
-    #         }
-    #     }
-
-
-    # Pu9t MEM values on -10 to +10 scale
+    # Put MEM values on -10 to +10 scale
     prescaled_MEM_matrix = MEM_matrix
     scale_max = max(abs(MEM_matrix[,c(1:ncol(MEM_matrix)-1)]))
     MEM_matrix = cbind((MEM_matrix[,c(1:ncol(MEM_matrix)-1)]/scale_max)*10,MEM_matrix[,ncol(MEM_matrix)])
@@ -210,9 +175,6 @@ MEM <- function(exp_data, transform=FALSE, cofactor=1, choose.markers=FALSE,mark
     # Apply rename_table function across matrices
     object_list_labeled <- lapply(list(MAGpop[,1:c(length(marker_names)-1)],MAGref[,1:c(length(marker_names)-1)],IQRpop[,1:c(length(marker_names)-1)],IQRref[,1:c(length(marker_names)-1)],MEM_matrix[,1:c(length(marker_names)-1)]),rename_table)
     object_list_labeled[[6]] <- file_order
-    #
-    #     # With Z score Apply rename_table function across matrices
-    #     object_list_labeled <- lapply(list(MAGpop[,1:c(length(marker_names)-1)],MAGref[,1:c(length(marker_names)-1)],IQRpop[,1:c(length(marker_names)-1)],IQRref[,1:c(length(marker_names)-1)],MEM_matrix[,1:c(length(marker_names)-1)],zscore_matrix_scaled[,1:c(length(marker_names)-1)],ks_matrix[,1:c(length(marker_names)-1)]),rename_table)
 
     #     # List all matrices for export
     all_values <- list("MAGpop" = object_list_labeled[1],"MAGref"=object_list_labeled[2],"IQRpop"=object_list_labeled[3],"IQRref"=object_list_labeled[4],"MEM_matrix"=object_list_labeled[5],"File Order" = object_list_labeled[6])
@@ -222,9 +184,6 @@ MEM <- function(exp_data, transform=FALSE, cofactor=1, choose.markers=FALSE,mark
         dir.create(file.path(getwd(), "output files"), showWarnings = FALSE)
         write.table(as.matrix(prescaled_MEM_matrix[,c(1:ncol(prescaled_MEM_matrix)-1)]),paste("./output files/",strftime(Sys.time(),"%Y-%m-%d_%H%M%S")," Pre-scaled MEM matrix.txt",sep=""),sep="\t",row.names=TRUE)
     }
-
-    # With z score List all matrices for export
-    # all_values <- list("MAGpop" = object_list_labeled[1],"MAGref"=object_list_labeled[2],"IQRpop"=object_list_labeled[3],"IQRref"=object_list_labeled[4],"MEM_matrix"=object_list_labeled[5],"zscore_matrix" = object_list_labeled[6],"ks_stat"=object_list_labeled[7])
 
     return(all_values)
 

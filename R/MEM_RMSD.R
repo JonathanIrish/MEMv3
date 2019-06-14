@@ -8,7 +8,7 @@ MEM_RMSD <-
         if (isTRUE(format == "pop files")) {
             infiles <- dir(MEM_vals)
             sample_names = as.character(c(1:length(infiles)))
-            RMSD = matrix(nrow = /Users/Sierra/Box/Work From Home/CIC Projects/Paula Smith/UMAP_PaulaSmith_Ter119neg.RDSlength(infiles), ncol = length(infiles))
+            RMSD = matrix(nrow = length(infiles), ncol = length(infiles))
             similarity = matrix(nrow = length(infiles), ncol = length(infiles))
 
             for (m in 1:length(infiles)) {

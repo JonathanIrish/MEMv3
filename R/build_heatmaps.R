@@ -14,8 +14,21 @@ build.heatmaps <-
         ##Build MEM heatmap with natural language output
         #Get MEM values and the max and min MEM value
         heatmap_data = (exp_data[[5]])[[1]]
-        scale_max = 10
-        scale_min = -10
+        
+        if (length(which(apply(heatmap_data, 1, function(row) any(row < 0)))) >0){
+            scale_max = 10
+            heat_palette_MEM <-
+                colorRampPalette(c("black", "yellow", "#FAF7C9"))
+            
+            pairs.breaks_MEM <-
+                c(seq(0, scale_max / 6.6, by = 0.1),
+                    seq(scale_max / 6.6, scale_max / 3.3, by = 0.1),
+                    seq(scale_max / 3.3, scale_max, by = 0.1)
+                )
+            pairs.breaks_MEM <- unique(pairs.breaks_MEM)
+        }else{
+            scale_max = 10
+            scale_min = -10
         #Initialize heatmap color palette
         heat_palette_MEM <-
             colorRampPalette(c("#A8C3F4", "#17499B", "black", "yellow", "#FAF7C9"))
@@ -28,7 +41,7 @@ build.heatmaps <-
                 seq(scale_max / 6.6, scale_max / 3.3, by = 0.1),
                 seq(scale_max / 3.3, scale_max, by = 0.1)
             )
-        pairs.breaks_MEM <- unique(pairs.breaks_MEM)
+        pairs.breaks_MEM <- unique(pairs.breaks_MEM)}
 
         #Initialize heatmap for medians
         medians_exp_data = (exp_data[[1]])[[1]]
@@ -36,8 +49,7 @@ build.heatmaps <-
         heat_palette_med <-
             colorRampPalette(c("black", "yellow", "#FAF7C9"))
         pairs.breaks_med <-
-            c(
-                seq(0, scale_max / 6.6, by = 0.1),
+            c(seq(0, scale_max / 6.6, by = 0.1),
                 seq(scale_max / 6.6, scale_max / 3.3, by = 0.1),
                 seq(scale_max / 3.3, scale_max, by = 0.1)
             )
@@ -172,7 +184,12 @@ build.heatmaps <-
 
         clustered_matrix = heatmap_data[rev(table$rowInd), table$colInd]
         matrix.test = as.matrix(new_rownames_txt)
-        enrichment_score_ordered = matrix.test[rev(table$rowInd), ]
+        
+        if (length(which(apply(heatmap_data, 1, function(row) any(row < 0)))) >0){
+            enrichment_score_ordered = matrix.test[rev(table$rowInd), ] 
+            enrichment_score_ordered = str_remove(enrichment_score_ordered, "• DN None")
+        }else{
+            enrichment_score_ordered = matrix.test[rev(table$rowInd), ]}
 
 
         # Print medians heatmap according to cluster spec

@@ -47,7 +47,7 @@ build.heatmaps <-
         medians_exp_data = (exp_data[[1]])[[1]]
         if (max(medians_exp_data) <= 2.8) {
             scale_max = 2.81
-        } else{
+        }else{
             scale_max = max(medians_exp_data)
         }
         heat_palette_IQR <-
@@ -146,8 +146,7 @@ build.heatmaps <-
                     lwid = c(0.6, 2.2)
                 )
 
-        }
-        else{
+        }else{
             table <-
                 heatmap.2(
                     heatmap_data,
@@ -208,7 +207,7 @@ build.heatmaps <-
                         trace = "none"
                     )
                 reorder_medians = as.matrix(exp_data[[1]][[1]])[rev(medians_table$rowInd), medians_table$colInd]
-            } else{
+            }else{
                 # return(reorder_medians)
                 table2 <-
                     heatmap.2(
@@ -258,7 +257,7 @@ build.heatmaps <-
                         trace = "none"
                     )
                 reorder_IQR = as.matrix(exp_data[[3]][[1]])[rev(IQR_table$rowInd), IQR_table$colInd]
-            } else{
+            }else{
                 table3 <-
                     heatmap.2(
                         reorder_IQR,
@@ -368,7 +367,7 @@ build.heatmaps <-
             )
             # write.table(new_rownames[rev(table$rowInd)],paste("./output files/",strftime(Sys.time(),"%Y-%m-%d_%H%M%S")," enrichment score-rownames.txt"),sep="\t")
 
-            if (((exp_data[[6]])[[1]]) == 0) {
+            if (((exp_data[[6]])[[1]]) == 0){
                 write.table(
                     enrichment_score_ordered,
                     paste(
@@ -378,7 +377,7 @@ build.heatmaps <-
                     ),
                     sep = "\t"
                 )
-            } else{
+            }else{
                 filenames <- unlist(exp_data[[6]])
                 matrix.filenames = as.matrix(filenames)
                 filenames_ordered = matrix.filenames[rev(table$rowInd), ]
@@ -401,9 +400,9 @@ build.heatmaps <-
             # }
 
         }
-        if (((exp_data[[6]])[[1]]) == 0) {
+        if (((exp_data[[6]])[[1]]) == 0){
             cat(enrichment_score_ordered, sep = "\n")
-        } else{
+        }else{
             print(new_rownames_filenames, sep = "\n")
         }
     }

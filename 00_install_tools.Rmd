@@ -73,8 +73,8 @@ library(MEM)
 ?MEM
 
 # OR 
-install.packages("devtools", repos = "http://cran.us.r-project.org")
-devtools::install_github("JonathanIrish/MEMv3")
+#install.packages("devtools", repos = "http://cran.us.r-project.org")
+#devtools::install_github("JonathanIrish/MEMv3")
 
 ```
 ```{r install_last_packages, echo=FALSE, results = "markup"}

@@ -1,7 +1,7 @@
 MEM <- function(exp_data, transform=FALSE, cofactor=1, choose.markers=FALSE,markers="all",choose.ref=FALSE,zero.ref=FALSE,rename.markers=FALSE,new.marker.names="none",file.is.clust=FALSE,add.fileID=FALSE,IQR.thresh=NULL,output.prescaled.MEM=FALSE)
 {
     if (file.is.clust == TRUE) {
-        file_order = exp_data} else {file_order = 0}
+        file_order = exp_data}else {file_order = 0}
 
     # Check user input
     if(missing(exp_data)){
@@ -48,8 +48,8 @@ MEM <- function(exp_data, transform=FALSE, cofactor=1, choose.markers=FALSE,mark
     # Get markers to include in analysis and extract column names
     marker_names = as.vector(c(colnames(exp_data)[1:(ncol(exp_data)-1)],"cluster"))
     if(choose.markers==TRUE){
-        markerList = choose.markers(exp_data)} else if(choose.markers == FALSE && markers == "all"){
-        markerList=c(1:ncol(exp_data))} else{sep_vals = unlist(strsplit(markers,","))
+        markerList = choose.markers(exp_data)}else if(choose.markers == FALSE && markers == "all"){
+        markerList=c(1:ncol(exp_data))}else{sep_vals = unlist(strsplit(markers,","))
             list_vals = vector()
                 for(i in 1:length(sep_vals)){
                     val = sep_vals[i]
@@ -131,14 +131,10 @@ MEM <- function(exp_data, transform=FALSE, cofactor=1, choose.markers=FALSE,mark
         MAGref = altRef_vals[[1]]
         IQRref = altRef_vals[[2]]
         zero.ref == FALSE
-    }
-
-    else if(zero.ref==TRUE){
+    }else if(zero.ref==TRUE){
         zeroRef_vals = zero.ref(exp_data,num_pops,num_markers)
         MAGref = zeroRef_vals[[1]]
-        IQRref = zeroRef_vals[[2]]}
-
-    else{
+        IQRref = zeroRef_vals[[2]]}else{
         for(i in 1:num_pops){
             pop = pop_names[i]
             MAGref[i,] = abs(apply(subset(exp_data,cluster!=pop),2,FUN=median,na.rm=TRUE))

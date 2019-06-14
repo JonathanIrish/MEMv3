@@ -280,8 +280,6 @@ build.heatmaps <-
                     )
             }
         }
-
-        #     # Output files
         #
         dir.create(file.path(getwd(), "output files"), showWarnings = FALSE)
         #
@@ -317,19 +315,6 @@ build.heatmaps <-
                 lwid = c(0.6, 2.2)
             )
             dev.off()
-            # #
-            # #         # Generate median heatmap pdf
-            #         if(cluster.medians!="none"){
-            #             pdf(paste("./output files/", strftime(Sys.time(),"%Y-%m-%d_%H%M%S"), " Medians heatmap.pdf"))
-            #             heatmap.2(as.matrix(exp_data[[1]][[1]]),main="Median heatmap",dendrogram=dendro_var_med,Rowv=Rowv_var_med,Colv=Colv_var_med,breaks=pairs.breaks_med, revC=FALSE,symm=FALSE, symkey=FALSE,symbreaks=FALSE,scale="none",cexRow=1,cexCol=0.8,key=TRUE,col=heat_palette_med, margins=c(5,10),trace="none")
-            #                       dev.off()
-            #
-            #         }else{
-            #             pdf(paste("./output files/",strftime(Sys.time(),"%Y-%m-%d_%H%M%S"), " Medians heatmap.pdf"))
-            #             heatmap.2(reorder_medians,main="Median heatmap",dendrogram="none",Rowv=FALSE,Colv=FALSE,breaks=pairs.breaks_med, revC=FALSE,symm=FALSE, symkey=FALSE,symbreaks=FALSE,scale="none",cexRow=1,cexCol=0.8,key=TRUE,col=heat_palette_med, margins=c(5,15),trace="none")
-            #             dev.off()
-            #
-
 
             # Write data to text files
             write.table(
@@ -365,7 +350,6 @@ build.heatmaps <-
                 sep = "\t",
                 row.names = TRUE
             )
-            # write.table(new_rownames[rev(table$rowInd)],paste("./output files/",strftime(Sys.time(),"%Y-%m-%d_%H%M%S")," enrichment score-rownames.txt"),sep="\t")
 
             if (((exp_data[[6]])[[1]]) == 0){
                 write.table(
@@ -403,6 +387,12 @@ build.heatmaps <-
         if (((exp_data[[6]])[[1]]) == 0){
             cat(enrichment_score_ordered, sep = "\n")
         }else{
+            filenames <- unlist(exp_data[[6]])
+            matrix.filenames = as.matrix(filenames)
+            filenames_ordered = matrix.filenames[rev(table$rowInd), ]
+            new_rownames_filenames <-
+                cbind(filenames_ordered, enrichment_score_ordered)
+            colnames(new_rownames_filenames) <- c("File", "MEM label")
             print(new_rownames_filenames, sep = "\n")
         }
     }

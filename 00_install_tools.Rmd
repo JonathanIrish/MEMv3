@@ -17,7 +17,7 @@ cat("This section checks to see if files and paths are working correctly. You sh
 
 # Check the MEM code path
 cat("\n\nThe /MEM folder contains the MEM source code for install and related files:\n")
-list.files(paste(getwd(), "/MEM", sep=""))
+list.files(getwd())
 
 # Check for datasets
 cat("\n\nCourse FCS format files are in subdirecties of the /datafiles folder:\n")
@@ -68,20 +68,27 @@ library(ggExtra)
 cat("If this works, you should see several lines about installing files, then DONE (MEM) near the end.  The MEM help page will also open in the Help menu in RStudio.\n\n")
 
 # If you have previously installed MEM, you may get an error message. If this is the case, try restarting your RStudio session
-install.packages(paste(getwd(), "/MEM", sep=""), type="source", repos=NULL)
+install.packages(getwd(), type="source", repos=NULL)
 library(MEM)
 ?MEM
+
+# OR 
+#install.packages("devtools", repos = "http://cran.us.r-project.org")
+#devtools::install_github("JonathanIrish/MEMv3")
+
 ```
 ```{r install_last_packages, echo=FALSE, results = "markup"}
 # install the last packages for UMAP, t-SNE and other tools
 print("You may see a bunch of messages, this is OK as long as they are not errors.\n\n")
 install.packages("tidyverse", repos = "http://cran.us.r-project.org")
 install.packages("Rtsne", repos = "http://cran.us.r-project.org")
-install.packages("devtools", repos = "http://cran.us.r-project.org")
-devtools::install_github("jlmelville/uwot")
+install.packages("uwot", repos = "http://cran.us.r-project.org")
+install.packages("RColorBrewer", repos = "http://cran.us.r-project.org")
 ```
 ```{r load_last_packages, echo=FALSE, results = "markup"}
 # Load and test the last libraries
 library(tidyverse)
+library(Rtsne)
 library(uwot)
+library(RColorBrewer)
 ```

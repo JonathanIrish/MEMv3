@@ -15,7 +15,7 @@ build.heatmaps <-
         #Get MEM values and the max and min MEM value
         heatmap_data = (exp_data[[5]])[[1]]
         
-        if (length(which(apply(heatmap_data, 1, function(row) any(row < 0)))) >0){
+        if (length(which(apply(heatmap_data, 1, function(row) any(row < 0)))) == 0){
             scale_max = 10
             heat_palette_MEM <-
                 colorRampPalette(c("black", "yellow", "#FAF7C9"))
@@ -181,7 +181,6 @@ build.heatmaps <-
                 )
         }
 
-
         clustered_matrix = heatmap_data[rev(table$rowInd), table$colInd]
         matrix.test = as.matrix(new_rownames_txt)
         
@@ -190,7 +189,6 @@ build.heatmaps <-
             enrichment_score_ordered = str_remove(enrichment_score_ordered, "• DN None")
         }else{
             enrichment_score_ordered = matrix.test[rev(table$rowInd), ]}
-
 
         # Print medians heatmap according to cluster spec
         reorder_medians = as.matrix(exp_data[[1]][[1]])[rev(table$rowInd), table$colInd]
@@ -225,7 +223,6 @@ build.heatmaps <-
                     )
                 reorder_medians = as.matrix(exp_data[[1]][[1]])[rev(medians_table$rowInd), medians_table$colInd]
             }else{
-                # return(reorder_medians)
                 table2 <-
                     heatmap.2(
                         reorder_medians,
@@ -297,9 +294,7 @@ build.heatmaps <-
                     )
             }
         }
-        #
         dir.create(file.path(getwd(), "output files"), showWarnings = FALSE)
-        #
         if (output.files == TRUE) {
             # #         # Generate pdfs from MEM heatmap plot
             pdf(paste(
@@ -395,11 +390,6 @@ build.heatmaps <-
                     sep = "\t"
                 )
             }
-
-            # }
-
-            # }
-
         }
         if (((exp_data[[6]])[[1]]) == 0){
             cat(enrichment_score_ordered, sep = "\n")

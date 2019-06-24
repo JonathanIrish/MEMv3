@@ -66,4 +66,4 @@ Note these are similar to the clusters 5 and 6 from the UMAP and 1 and 6 from th
 
 ## License
 
-This project is licensed according to Vanderbilt University policy - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed according to Vanderbilt University policy - see the [LICENSE.MD](LICENSE.MD) file for details

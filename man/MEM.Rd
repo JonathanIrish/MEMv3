@@ -1,6 +1,5 @@
 \name{MEM}
 \alias{MEM}
-\alias{Marker Enrichment Modeling}
 \title{
 Marker Enrichment Modeling
 }
@@ -8,7 +7,7 @@ Marker Enrichment Modeling
 The MEM function takes pre-clustered, single-cell data as input and calculates relative enrichment scores for each marker on each population.
 }
 \usage{
-MEM(exp_data, transform=FALSE, cofactor=1, choose.markers=FALSE, markers="all",
+MEM_values <- MEM(exp_data, transform=FALSE, cofactor=1, choose.markers=FALSE, markers="all",
 choose.ref=FALSE, zero.ref=FALSE, rename.markers=FALSE, new.marker.names="none",
 file.is.clust=FALSE, add.fileID=FALSE, IQR.thresh=NULL, output.prescaled.MEM=FALSE)
 }

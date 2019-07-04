@@ -36,6 +36,7 @@ install.packages("BiocManager", repos = "http://cran.us.r-project.org")
 if (!requireNamespace("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
 BiocManager::install("flowCore")
+BiocManager::install("FlowSOM")
 
 ```
 ```{r test_flow_installs, echo=FALSE, results = "markdown"}

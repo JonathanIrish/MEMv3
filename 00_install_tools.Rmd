@@ -105,3 +105,11 @@ library(Rtsne)
 library(uwot)
 library(RColorBrewer)
 ```
+
+```{r install_tinytex, echo=FALSE, results = "markup"}
+# install the R package
+install.packages('tinytex', repos = "http://cran.us.r-project.org")
+
+# setup the external stuff and configure
+tinytex::install_tinytex()
+```

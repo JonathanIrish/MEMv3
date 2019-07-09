@@ -1,7 +1,6 @@
 ---
 title: "Intro to Marker Enrichment Modeling Analysis"
-author: "Kirsten Diggins"
-editor: "Sierra Barone"
+author: "Kirsten Diggins, Sierra Barone, and Jonathan Irish"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -9,12 +8,12 @@ vignette: >
   %\VignetteIndexEntry{Intro to Marker Enrichment Modeling Analysis}
   %\VignetteIndexEntry{MEM}
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+  \usepackage[utf8]{inputenc}
 ---
 
 ## Intro to Marker Enrichment Modeling
 
-Marker Enrichment ModelingMarker Enrichment Modeling (MEM) is an analysis method for automatically generating quantitative labels for cell populations. The labels include measured features that are specifically enriched on the population compared to a reference population or set of populations. 
+Marker Enrichment Modeling (MEM) is an analysis method for automatically generating quantitative labels for cell populations. The labels include measured features that are specifically enriched on the population compared to a reference population or set of populations. 
 
 The equation is as follows:
 
@@ -175,7 +174,6 @@ The `build.heatmaps` function will output a heatmap of population medians and a 
 Output files include
 
 * PDF of MEM heatmap ("MEM heatmap.pdf")  
-* PDF of median heatmap ("Medians heatmap.pdf")  
 * Txt file containing the population MEM labels ("enrichment score-rownames.txt")  
 * Txt file containing the population median values displayed in the heatmap ("Medians matrix.txt")   
 * Txt file containing unrounded population MEM scores displayed in the heatmap("MEM matrix.txt")  
